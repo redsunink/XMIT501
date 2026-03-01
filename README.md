@@ -17,3 +17,6 @@ Set your global transmit hotkey, and separate Ch1/Ch2/Ch3 hotkeys if needed.
 If you wish to connect to a server, put IP:port in corresponding field and press "Apply&Close".
 If you wish to act as a server, put any IP (like localhost - 127.0.0.1 or 255.255.255.255 or anything) and port you wish server to listen to (defaults to 5000) in same manner (e.g. 127.0.0.1:5000) and check "Host server" checkbox. Press "Apply&Close".
 After closing setting window, press turnswitch on top right to "LIVE".
+This should enable "CONNECTED" light and a screen, as well as background static SFX. In a few seconds it should show status and ping for client e.g. "CONNECTED [20MS]", or "DISPATCH[OPEN]" for a successful server start.
+You now may select your reception channels ("RECV CHL") and transmission channels ("XMIT CHL") and use application.
+Turn off "STATIC" and "BLIP" to disable SFX respectively.
