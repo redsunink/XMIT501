@@ -1,0 +1,228 @@
+<Window x:Class="XMIT501_CS.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="XMIT-501"
+        Icon="assets/icon.ico"
+        Height="750" Width="460" 
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None" 
+        ResizeMode="CanResizeWithGrip"
+        MouseDown="Window_MouseDown"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        KeyDown="Window_KeyDown"
+        KeyUp="Window_KeyUp"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <Style TargetType="TextBox" x:Key="KhakiFocusStyle">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Background" Value="#222"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#555"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="SelectionBrush" Value="#888B7D"/>
+            <Setter Property="SelectionOpacity" Value="0.6"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#888B7D"/>
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect Color="#888B7D" BlurRadius="10" ShadowDepth="0" Opacity="0.8"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="KhakiButtonStyle">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Background" Value="#222"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#555"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#888B7D"/>
+                    <Setter Property="Foreground" Value="#888B7D"/>
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect Color="#888B7D" BlurRadius="8" ShadowDepth="0" Opacity="0.6"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="FlipSwitchStyle" TargetType="ToggleButton">
+            <EventSetter Event="Click" Handler="ChannelSwitch_Click"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid>
+                            <Image x:Name="SwitchImage"
+                                Source="assets\buttons\flipswitch_off.png"
+                                Width="40" Height="51" 
+                                Stretch="Uniform"
+                                Cursor="Hand"/>
+                            <ContentPresenter/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="SwitchImage" Property="Source"
+                                        Value="assets\buttons\flipswitch_on.png"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Viewbox Stretch="Uniform">
+        <Canvas Width="974" Height="1536">
+
+            <Image x:Name="BodyImage"
+                Source="assets\body_blank.png" 
+                Width="974" Height="1536" 
+                Stretch="Fill" />
+
+            <StackPanel x:Name="RadioScreen"
+                        Canvas.Left="80" Canvas.Top="1085"
+                        Width="450" Height="150"
+                        ClipToBounds="True">
+                <Canvas x:Name="MainCanvas" Height="60" Width="450">
+                    <TextBlock x:Name="StationLine1" 
+                            Text="" 
+                            Foreground="Black" 
+                            FontSize="50" 
+                            FontFamily="pack://application:,,,/fonts/#Doto"
+                            Canvas.Left="0" Canvas.Top="0"/>
+                </Canvas>
+                <TextBlock x:Name="StationLine2" 
+                        Text="" 
+                        Foreground="#000000" 
+                        FontSize="50" 
+                        FontFamily="pack://application:,,,/fonts/#Doto" />
+            </StackPanel>
+
+            <Image x:Name="PowerSwitch"
+                Source="assets\buttons\turnswitch_off.png"
+                Width="155" Height="154"
+                Canvas.Left="715" Canvas.Top="270"
+                Cursor="Hand"
+                MouseDown="PowerSwitch_MouseDown"/>
+
+            <Button x:Name="ParamButton" 
+                    Canvas.Left="865" Canvas.Top="1267" 
+                    Width="78" Height="78" 
+                    Click="ParamButton_Click" Cursor="Hand">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Image Source="assets\buttons\knob_param.png" Stretch="Uniform"/>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Image x:Name="LedOffline" Source="assets\buttons\light_red.png" Width="44" Height="44" Canvas.Left="659" Canvas.Top="163" Visibility="Visible"/>
+            <Image x:Name="LedLive" Source="assets\buttons\light_green.png" Width="44" Height="44" Canvas.Left="880" Canvas.Top="163" Visibility="Hidden"/>
+            <Image x:Name="LedConn" Source="assets\buttons\light_yellow.png" Width="44" Height="44" Canvas.Left="510" Canvas.Top="1289" Visibility="Hidden"/>
+            <Image x:Name="LedTx" Source="assets\buttons\light_green.png" Width="44" Height="44" Canvas.Left="880" Canvas.Top="927" Visibility="Hidden"/>
+            <Image x:Name="LedRx" Source="assets\buttons\light_green.png" Width="44" Height="44" Canvas.Left="880" Canvas.Top="733" Visibility="Hidden"/>
+
+            <StackPanel Canvas.Left="883" Canvas.Top="1072" Orientation="Vertical">
+                <ToggleButton x:Name="ToggleBlip" Style="{StaticResource FlipSwitchStyle}" Tag="Misc_Blip" IsChecked="True"/>
+            </StackPanel>
+
+            <StackPanel Canvas.Left="883" Canvas.Top="1175" Orientation="Vertical">
+                <ToggleButton x:Name="ToggleStatic" Style="{StaticResource FlipSwitchStyle}" Tag="Misc_Static" IsChecked="True"/>
+            </StackPanel>
+
+            <StackPanel x:Name="RxPanel" Canvas.Left="58" Canvas.Top="220">
+                <UniformGrid Rows="2" Columns="5" Width="363" Height="143">
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Rx_1"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Rx_2"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Rx_3"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Rx_4"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Rx_5"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Rx_6"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Rx_7"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Rx_8"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Rx_9"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Rx_10"/>
+                </UniformGrid>
+            </StackPanel>
+
+            <StackPanel x:Name="TxPanel" Canvas.Left="58" Canvas.Top="560">
+                <UniformGrid Rows="2" Columns="5" Width="363" Height="143">
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Tx_1"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Tx_2"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Tx_3"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Tx_4"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Tx_5"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Tx_6"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Tx_7"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Tx_8"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Tx_9"/>
+                    <ToggleButton Style="{StaticResource FlipSwitchStyle}" Tag="Tx_10"/>
+                </UniformGrid>
+            </StackPanel>
+
+            <Border x:Name="SettingsOverlay" Visibility="Collapsed" 
+                    Canvas.Left="0" Canvas.Top="0" 
+                    Width="974" Height="1536" 
+                    Background="#F2050505" Panel.ZIndex="100">
+                
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="500">
+
+                    <TextBlock Text="RADIO PARAMETERS" Foreground="#888B7D" FontSize="30" FontFamily="pack://application:,,,/fonts/#Doto" Margin="0,0,0,30" TextAlignment="Center"/>
+
+                    <Button x:Name="AboutButton" Content=" ? " 
+                    Width="40" Height="40" 
+                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0"
+                    Background="#222222" Foreground="White" BorderBrush="#555555"
+                    Click="AboutButton_Click"/>
+
+                    <TextBlock Text="TARGET IP : PORT" Foreground="Gray" FontSize="32" FontFamily="pack://application:,,,/fonts/#Doto"/>
+                    <Grid Margin="0,5,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="IpTextBox" Text="127.0.0.1:5000" FontSize="32" FontFamily="pack://application:,,,/fonts/#Doto" Style="{StaticResource KhakiFocusStyle}"/>
+                        <Button x:Name="CopyIpButton" Grid.Column="1" Content="COPY" Width="80" Margin="10,0,0,0" Visibility="Collapsed" Click="CopyIpButton_Click" Style="{StaticResource KhakiButtonStyle}" FontFamily="pack://application:,,,/fonts/#Doto" FontSize="20"/>
+                    </Grid>
+
+                    <CheckBox x:Name="HostServerCheckbox" 
+                              Content="HOST SERVER ON THIS PORT" 
+                              Foreground="White" 
+                              FontSize="20" 
+                              FontFamily="pack://application:,,,/fonts/#Doto" 
+                              Margin="0,0,0,30" 
+                              Checked="HostServerCheckbox_Changed" 
+                              Unchecked="HostServerCheckbox_Changed"
+                              Cursor="Hand">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+
+                    <TextBlock Text="GLOBAL TX KEYBIND" Foreground="Gray" FontSize="20" FontFamily="pack://application:,,,/fonts/#Doto"/>
+                    <Button x:Name="PttBindButton" Content="[ V ]" FontSize="24" FontFamily="pack://application:,,,/fonts/#Doto" Style="{StaticResource KhakiButtonStyle}" Click="PttBindButton_Click" Margin="0,5,0,15"/>
+
+                    <TextBlock Text="DIRECT TX (CH 1)" Foreground="Gray" FontSize="20" FontFamily="pack://application:,,,/fonts/#Doto"/>
+                    <Button x:Name="PttCh1BindButton" Content="[ UNBOUND ]" FontSize="24" FontFamily="pack://application:,,,/fonts/#Doto" Style="{StaticResource KhakiButtonStyle}" Click="PttBindButton_Click" Tag="1" Margin="0,5,0,15"/>
+
+                    <TextBlock Text="DIRECT TX (CH 2)" Foreground="Gray" FontSize="20" FontFamily="pack://application:,,,/fonts/#Doto"/>
+                    <Button x:Name="PttCh2BindButton" Content="[ UNBOUND ]" FontSize="24" FontFamily="pack://application:,,,/fonts/#Doto" Style="{StaticResource KhakiButtonStyle}" Click="PttBindButton_Click" Tag="2" Margin="0,5,0,15"/>
+
+                    <TextBlock Text="DIRECT TX (CH 3)" Foreground="Gray" FontSize="20" FontFamily="pack://application:,,,/fonts/#Doto"/>
+                    <Button x:Name="PttCh3BindButton" Content="[ UNBOUND ]" FontSize="24" FontFamily="pack://application:,,,/fonts/#Doto" Style="{StaticResource KhakiButtonStyle}" Click="PttBindButton_Click" Tag="3" Margin="0,5,0,30"/>
+                                        <Button Content="APPLY &amp; CLOSE" FontSize="24" FontFamily="pack://application:,,,/fonts/#Doto" Padding="10" Style="{StaticResource KhakiButtonStyle}" Click="CloseSettings_Click" Background="#111"/>
+                </StackPanel>
+            </Border>
+
+        </Canvas>
+    </Viewbox>
+</Window>

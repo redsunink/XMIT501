@@ -1,0 +1,7 @@
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.pfx
+*.log
+config.json
