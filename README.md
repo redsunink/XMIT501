@@ -1,22 +1,41 @@
-# XMIT501
-A Compact Tactical Radio application for simplistic multilayer communication.
+# 📻 XMIT-501 Tactical Radio
+**A Compact Tactical Radio application for seamless multilayer communication.**
 
-This application was created with Google Gemini assistance (AI).
+> *Developed with assistance from Google Gemini AI.*
 
-XMIT-501 is a low-latency high performance voice application made to imitate the radio communications and introduce multiple comm layers with least possible effort ("zero-IQ enduser policy"), opposed to (but not replacing) software like Discord, TeamSpeak or Mumble.
-It behaves as pseudo-simplex (one-way) radio as a creative constraint, enabling communication over 10 channels with arbitrary selection of reception and transmission channels and benefits from structured communication rules and radio discipline.
-Basic package includes both client and server. Headless relay is available as source for hosting on server machines.
-XMIT-501 supports wide variety of input methods like joystick, HOTAS, steering wheels etc (DirectInput).
-In server mode, application benefits from router UPnP to avoid port forwarding hassle.
-It does not use any encryption or protection; your voice is transmitted over UDP using real-time transport protocol, encoded with Opus codec.
+XMIT-501 is a low-latency, high-performance voice application designed to simulate authentic radio environments. It introduces multiple communication layers with minimal effort (**"Zero-IQ Enduser Policy"**), serving as a tactical alternative to (but not a replacement for) software like Discord, TeamSpeak, or Mumble.
 
-# Quick Start
-You will need .NET 8.0 installed; you will be prompted on launch if it's missing (this should direct you to Windows Store or website to install it momentarily - 55 MB download).
-After launch, press on PARAM knob/button to open settings window.
-Set your global transmit hotkey, and separate Ch1/Ch2/Ch3 hotkeys if needed.
-If you wish to connect to a server, put IP:port in corresponding field and press "Apply&Close".
-If you wish to act as a server, put any IP (like localhost - 127.0.0.1 or 255.255.255.255 or anything) and port you wish server to listen to (defaults to 5000) in same manner (e.g. 127.0.0.1:5000) and check "Host server" checkbox. Press "Apply&Close".
-After closing setting window, press turnswitch on top right to "LIVE".
-This should enable "CONNECTED" light and a screen, as well as background static SFX. In a few seconds it should show status and ping for client e.g. "CONNECTED [20MS]", or "DISPATCH[OPEN]" for a successful server start.
-You now may select your reception channels ("RECV CHL") and transmission channels ("XMIT CHL") and use application.
-Turn off "STATIC" and "BLIP" to disable SFX respectively.
+---
+
+### 🛡️ Core Philosophy
+* **Pseudo-Simplex:** Operates as a one-way radio by design to encourage structured communication and radio discipline.
+* **10-Channel Matrix:** Supports arbitrary selection of reception and transmission channels.
+* **Universal Input:** Native support for Joysticks, HOTAS, and steering wheels via DirectInput.
+* **Zero-Config Hosting** (for home use): Integrated **UPnP** support to bypass manual port forwarding on consumer-grade routers.
+* **High Fidelity:** Audio is transmitted over UDP using the **Opus** codec for quality tactical comms.
+* **Protocol simplicity:** The only packets on your network are UDP with actual voice and 1-byte channel identifier. Lowest possible ping and bandwidth usage.
+* **Low-level networking:** XMIT-501 will work over internet, LAN or any other network that will transport UDP - like OpenVPN, RadminVPN, Hamachi etc.
+
+---
+
+### ⚠️ Disclaimer
+This is experimental software provided "as is" without warranty of any kind. 
+XMIT-501 does not use encryption and does not give any means to conceal your IP address. Your voice data is transmitted in 
+plain-text Opus packets over UDP. Use only on trusted networks. 
+The developer is not responsible for any network instability or 
+hardware issues arising from the use of this software.
+THIS APPLICATION **DOES NOT** COLLECT OR SEND ANY OF YOUR DATA TO AUTHOR OR THIRD PARTY
+YOU BEAR WHOLE RESPONSIBILITY FOR OPENING YOUR PORTS TO THE WORLD AND/OR SHARING YOUR ACTUAL IP ADDRESS
+
+---
+
+### 🚀 Quick Start
+1. **Requirements:** You need **.NET 8.0** installed (the app will prompt you with a download link if it's missing).
+2. **Setup:** Click the **PARAM** knob/button to open Settings.
+3. **Keybinds:** Map your **Global TX** and optional **Ch1/Ch2/Ch3** hotkeys.
+4. **Connect:** - **Client:** Enter `IP:Port` (e.g., `1.2.3.4:5000`) and click Apply.
+   - **Host:** Enter any IP and desired port (e.g., `127.0.0.1:5000`), check **Host Server**, and click Apply. This will use specified port to listen to.
+5. **Power On:** Rotate the top-right switch to **LIVE**.
+6. **Status:** The screen will display `CONNECTED [XX MS]` for clients or `DISPATCH [OPEN]` for hosts.
+
+> **Tip:** You can toggle **STATIC** and **BLIP** switches to customize your audio feedback.
